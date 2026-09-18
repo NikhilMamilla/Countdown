@@ -1,3 +1,111 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #050308;
+  color: #ede9fb;
+  font-family: 'Rajdhani', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+::selection {
+  background: rgba(255, 43, 77, 0.35);
+}
+
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Focus visibility for keyboard navigation — never suppressed. */
+:focus-visible {
+  outline: 2px solid #ff5c73;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Kalachakra background system ------------------------------------- */
+/* The supplied artwork as a full-bleed backdrop, with a dark scrim so the
+   countdown always stays the dominant, readable element, plus a few
+   code-generated atmospheric layers (particles, cracks, fog) for subtle
+   life. The page still renders correctly if the image fails to load —
+   the gradient scrim alone forms a complete dark background. */
+
+.kalachakra-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: #050308;
+  background-image: url('/image.png');
+  background-size: cover;
+  background-position: center center;
+}
+
+.kalachakra-bg::before {
+  /* Dark scrim for text contrast, heaviest at center and edges. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 52% at 50% 50%, rgba(5, 3, 8, 0.82) 0%, rgba(5, 3, 8, 0.5) 50%, transparent 78%),
+    linear-gradient(180deg, rgba(5, 3, 8, 0.9) 0%, rgba(5, 3, 8, 0.4) 22%, rgba(5, 3, 8, 0.45) 70%, rgba(5, 3, 8, 0.94) 100%),
+    linear-gradient(90deg, rgba(5, 3, 8, 0.6) 0%, transparent 20%, transparent 80%, rgba(5, 3, 8, 0.6) 100%);
+}
+
+.kalachakra-bg::after {
+  /* Slow fog drift over the artwork. */
+  content: '';
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(ellipse 70% 35% at 50% 100%, rgba(10, 7, 16, 0.55), transparent 70%);
+  animation: fog-drift 26s ease-in-out infinite;
+}
+
+.dimensional-crack {
+  position: absolute;
+  background: linear-gradient(180deg, transparent, rgba(255, 43, 77, 0.45), transparent);
+  filter: blur(0.5px);
+  animation: crack-pulse 6s ease-in-out infinite;
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kalachakra-bg::after,
+  .dimensional-crack {
+    animation: none !important;
+  }
+}
