@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { DURATION_HOURS } from '../config';
 
 interface LaunchButtonProps {
   onLaunch: () => void;
@@ -50,7 +51,7 @@ export function LaunchButton({ onLaunch, disabled }: LaunchButtonProps) {
         }
         transition={pressed ? { duration: 0.15 } : { duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
         className="relative rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-xl px-9 py-4 sm:px-14 sm:py-5 font-display font-black uppercase tracking-[0.14em] text-white text-[clamp(0.95rem,2.1vw,1.4rem)] transition-opacity disabled:cursor-not-allowed disabled:opacity-80"
-        aria-label="Start the 24-hour countdown"
+        aria-label={`Start the ${DURATION_HOURS}-hour countdown`}
       >
         <span
           className="pointer-events-none absolute inset-0 rounded-full"
